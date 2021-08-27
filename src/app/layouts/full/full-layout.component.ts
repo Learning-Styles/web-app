@@ -9,13 +9,13 @@ import {
   ChangeDetectorRef,
   HostListener
 } from "@angular/core";
-import { ConfigService } from "app/shared/services/config.service";
+import { ConfigService } from "../../shared/services/config.service";
 import { DOCUMENT } from "@angular/common";
 import { Subscription } from "rxjs";
-import { CustomizerService } from 'app/shared/services/customizer.service';
+import { CustomizerService } from '../../shared/services/customizer.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { LayoutService } from 'app/shared/services/layout.service';
-import { WINDOW } from 'app/shared/services/window.service';
+import { LayoutService } from '../../shared/services/layout.service';
+import { WINDOW } from '../../shared/services/window.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -118,7 +118,7 @@ export class FullLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
         this.renderer.removeClass(this.document.body, "horizontal-menu");
         this.renderer.removeClass(this.document.body, "menu-open");
 
-         this.renderer.addClass(this.document.body, "horizontal-layout");
+        this.renderer.addClass(this.document.body, "horizontal-layout");
         this.renderer.addClass(this.document.body, "horizontal-menu-padding");
         this.renderer.addClass(this.document.body, "vertical-layout");
         this.renderer.addClass(this.document.body, "vertical-overlay-menu");

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { ErrorComponent } from './error/error.component';
-import { FULL_LAYOUT_ROUTES } from './layouts/full/full-layout-routing.module';
 import { FullLayoutComponent } from './layouts/full/full-layout.component';
+import { FULL_LAYOUT_ROUTES } from './layouts/full/full-layout-routes';
 
 
 const appRoutes: Routes = [
@@ -18,8 +18,8 @@ const appRoutes: Routes = [
   { 
     path: '', 
     component: FullLayoutComponent, 
-    children: FULL_LAYOUT_ROUTES, 
-    // canActivate: [AuthGuard] 
+    children: FULL_LAYOUT_ROUTES
+    // loadChildren: () => import('../app/layouts/full/full-layout.module').then(m => m.FullLayoutModule)
   },
   {
     path: '**',
