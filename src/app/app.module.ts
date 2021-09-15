@@ -20,17 +20,15 @@ import { ErrorComponent } from './error/error.component';
 import { FullLayoutComponent } from './layouts/full/full-layout.component';
 import { RouterModule } from '@angular/router';
 
+import { ReactiveFormsModule } from "@angular/forms";
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
-  wheelPropagation: false
+  wheelPropagation: false,
 };
 
 @NgModule({
-  declarations: [
-    AppComponent, 
-    ErrorComponent,
-    FullLayoutComponent
-  ],
+  declarations: [AppComponent, ErrorComponent, FullLayoutComponent],
   imports: [
     NgbModule,
     SharedModule,
@@ -40,14 +38,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HttpClientModule,
     PerfectScrollbarModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
   providers: [
-    { 
-      provide: PERFECT_SCROLLBAR_CONFIG, 
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG 
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
-    WINDOW_PROVIDERS
+    WINDOW_PROVIDERS,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
