@@ -8,15 +8,16 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
-
-
+import { HttpClientModule } from "@angular/common/http";
+import { RolComponent } from './pages/rol/rol.component';
 
 @NgModule({
   declarations: [
     AuthComponent,
     LoginComponent,
     RegisterComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    RolComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +25,8 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    NgxSpinnerModule
-  ]
+    NgxSpinnerModule,
+    HttpClientModule,
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}
