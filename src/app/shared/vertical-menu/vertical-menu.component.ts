@@ -2,7 +2,7 @@ import {
   Component, OnInit, ViewChild, OnDestroy,
   ElementRef, AfterViewInit, ChangeDetectorRef, HostListener
 } from "@angular/core";
-import { ROUTES } from './vertical-menu-routes.config';
+import { STUDENT_ROUTES } from './vertical-menu-routes.config';
 import { HROUTES } from '../horizontal-menu/navigation-routes.config';
 
 import { Router } from "@angular/router";
@@ -45,7 +45,8 @@ export class VerticalMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnInit() {
-    this.menuItems = ROUTES;
+    //TODO: Cargar rutas del menú lateral dependiendo del tipo de usuario
+    this.menuItems = STUDENT_ROUTES;
   }
 
   ngAfterViewInit() {
@@ -88,7 +89,7 @@ export class VerticalMenuComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
     else if (this.config.layout.menuPosition === "Side") { // Vertical Menu{
-      this.menuItems = ROUTES;
+      this.menuItems = STUDENT_ROUTES;
     }
 
 
