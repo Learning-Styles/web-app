@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import states from "../../../../assets/json/states.json";
 import cities from "../../../../assets/json/cities.json";
 
-import { RegisterService } from "../../service/register.service";
+import { RegisterService } from "../../services/register.service";
 
 @Component({
   selector: "app-register",

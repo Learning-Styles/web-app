@@ -2,7 +2,7 @@ import { Router } from "@angular/router";
 import { ChangeDetectorRef, Component } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { LoginService } from "app/auth/service/login.service";
+import { LoginService } from "app/auth/services/login.service";
 
 @Component({
   selector: "app-login",
