@@ -8,9 +8,11 @@ import { endpoint, google_client_id } from '../../../environments/environment'
   providedIn: 'root',
 })
 export class LoginService {
-  private auth2!: gapi.auth2.GoogleAuth;
 
+  private auth2!: gapi.auth2.GoogleAuth;
   private subject = new ReplaySubject<gapi.auth2.GoogleUser>(1);
+  private urlDesarrollo: string = endpoint;
+
   constructor(private http: HttpClient) {
     gapi.load('auth2', () => {
       this.auth2 = gapi.auth2.init({
@@ -18,8 +20,6 @@ export class LoginService {
       });
     });
   }
-
-  private urlDesarrollo: string = endpoint;
 
   login(usuario: FormGroup): Observable<any> {
     return this.http.post<FormGroup>(
@@ -33,6 +33,7 @@ export class LoginService {
       .signIn({})
       .then((user) => {
         let id_token = user.getAuthResponse().id_token;
+        
         this.GoogleSignIn(id_token).subscribe(
           (res) => {
             localStorage.setItem('token', res);
@@ -54,7 +55,8 @@ export class LoginService {
       this.subject.next(null!);
     });
   }
-  obsercavle(): Observable<gapi.auth2.GoogleUser> {
+
+  observable(): Observable<gapi.auth2.GoogleUser> {
     return this.subject.asObservable();
   }
 

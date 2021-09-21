@@ -10,13 +10,14 @@ import { LoginService } from "app/auth/services/login.service";
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent {
+
   loginFormSubmitted = false;
   isLoginFailed = false;
   user!: gapi.auth2.GoogleUser;
 
   loginForm = new FormGroup({
-    email: new FormControl("guest@apex.com", [Validators.required]),
-    password: new FormControl("Password", [Validators.required]),
+    email: new FormControl("alexis@alexis.com", [Validators.required]),
+    password: new FormControl("123456", [Validators.required]),
     rememberMe: new FormControl(true),
   });
 
@@ -27,17 +28,19 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private spinner: NgxSpinnerService,
-    private loginServi: LoginService,
+    private loginService: LoginService,
     private ref: ChangeDetectorRef
   ) {}
 
   // On submit button click
   onSubmit() {
-    this.loginServi.obsercavle().subscribe((user) => {
+    this.loginService.observable().subscribe((user) => {
       this.user = user;
       this.ref.detectChanges();
     });
+
     this.loginFormSubmitted = true;
+
     if (this.loginForm.invalid) {
       return;
     }
@@ -52,9 +55,10 @@ export class LoginComponent {
 
     this.spinner.hide();
 
-    this.loginServi.login(this.loginForm.value).subscribe(
+    this.loginService.login(this.loginForm.value).subscribe(
       (res) => {
-        localStorage.setItem("token", res);
+        console.log(res);
+        // localStorage.setItem("token", JSON.parse(res));
       },
       (err) => {
         console.log(err);
@@ -64,10 +68,10 @@ export class LoginComponent {
   }
 
   signIn() {
-    this.loginServi.signIn();
+    this.loginService.signIn();
   }
 
   signOut() {
-    this.loginServi.signOut();
+    this.loginService.signOut();
   }
 }
