@@ -2,12 +2,13 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { FormGroup } from "@angular/forms";
+import { endpoint } from '../../../environments/environment'
 
 @Injectable({
   providedIn: "root",
 })
 export class RegisterService {
-  private urlDesarrollo: string = "http://localhost:8080/api/usuario";
+  private urlDesarrollo: string = endpoint;
 
   constructor(private http: HttpClient) {}
 
