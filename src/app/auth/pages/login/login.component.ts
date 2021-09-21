@@ -64,7 +64,7 @@ export class LoginComponent {
         console.log(err);
       }
     );
-    this.router.navigate(["/page"]);
+    this.router.navigate(["/student"]);
   }
 
   signIn() {
