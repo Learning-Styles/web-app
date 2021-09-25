@@ -10,6 +10,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { HttpClientModule } from "@angular/common/http";
 import { RolComponent } from './pages/rol/rol.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromAuth from './reducers';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { RolComponent } from './pages/rol/rol.component';
     NgbModule,
     NgxSpinnerModule,
     HttpClientModule,
+    StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducers),
   ],
 })
 export class AuthModule {}
