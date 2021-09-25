@@ -3,6 +3,14 @@ import { ChangeDetectorRef, Component } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { LoginService } from "app/auth/services/login.service";
+import { Store } from "@ngrx/store";
+import { AppState } from "app/reducers";
+import { tap } from "rxjs/operators";
+import { noop } from "rxjs";
+import { loginAction } from "app/auth/auth.actions";
+import { User } from '../../models/user.model';
+import { userRolesDashboardPaths } from '../../user-roles';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-login",
@@ -29,7 +37,9 @@ export class LoginComponent {
     private router: Router,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private store: Store<AppState>,
+    private toastr: ToastrService
   ) {}
 
   // On submit button click
@@ -41,30 +51,37 @@ export class LoginComponent {
 
     this.loginFormSubmitted = true;
 
-    if (this.loginForm.invalid) {
-      return;
-    }
+    if (this.loginForm.invalid) { return; }
 
-    this.spinner.show(undefined, {
-      type: "ball-triangle-path",
-      size: "medium",
-      bdColor: "rgba(0, 0, 0, 0.8)",
-      color: "#fff",
-      fullScreen: true,
-    });
+    this.loginService.login(this.loginForm.value)
+      .pipe(
+        tap(res => {
+          // Convertir la respuesta del servidor en un objeto del tipo User
+          const user: User = {
+            data: res['usuario'],
+            token: res['token']
+          };
+          
+          // Guardar la información del usuario en el Store
+          this.store.dispatch( loginAction( { user } ) );
 
-    this.spinner.hide();
+          // Navegar hacia el dashboard
+          this.router.navigateByUrl(userRolesDashboardPaths[user.data.rol]);
+        })
+      )
+      .subscribe(noop, (err) => {
+        this.toastr.error(`${err}`, '¡Error!');
+      });
 
-    this.loginService.login(this.loginForm.value).subscribe(
-      (res) => {
-        console.log(res);
-        // localStorage.setItem("token", JSON.parse(res));
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-    this.router.navigate(["/student"]);
+    // this.spinner.show(undefined, {
+    //   type: "ball-triangle-path",
+    //   size: "medium",
+    //   bdColor: "rgba(0, 0, 0, 0.8)",
+    //   color: "#fff",
+    //   fullScreen: true,
+    // });
+
+    // this.spinner.hide();
   }
 
   signIn() {

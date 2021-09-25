@@ -29,7 +29,7 @@ import * as fromAuth from './reducers';
     NgbModule,
     NgxSpinnerModule,
     HttpClientModule,
-    StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducers),
-  ],
+    StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.authReducer),
+  ]
 })
 export class AuthModule {}
