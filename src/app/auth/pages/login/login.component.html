@@ -12,23 +12,23 @@
                 <div class="col-lg-6 col-12 px-4 py-3">
                   <h4 class="mb-2 card-title">Login</h4>
                   <p>Bienvenido de nuevo, inicie sesión en su cuenta.</p>
-                  <ngb-alert type="light-danger" class="mb-2" *ngIf="isLoginFailed" (close)="isLoginFailed = false">
+                  <ngb-alert type="light-danger" class="mb-2" *ngIf="loginFailed$ | async" (close)="loginFailed$.next(false)">
                     <p class="mb-0">¡Error de inicio de sesion!</p>
                   </ngb-alert>
                   <form [formGroup]="loginForm">
                     <div class="form-group">
                       <input type="text" formControlName="email" class="form-control" placeholder="email"
-                        [ngClass]="{ 'is-invalid': loginFormSubmitted && lf.username.invalid, 'is-valid': loginFormSubmitted && !lf.username.invalid }"
+                        [ngClass]="{ 'is-invalid': (loginFormSubmitted && lf.email.invalid) || loginFailed$ | async, 'is-valid': loginFormSubmitted && !lf.email.invalid }"
                         required>
                       <div *ngIf="loginForm.get('email').errors"
-                        class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Esto es requerido</div>
+                        class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Este campo es obligatorio</div>
                     </div>
                     <div class="form-group">
                       <input type="password" formControlName="password" class="form-control" placeholder="Old Password"
-                        [ngClass]="{ 'is-invalid': loginFormSubmitted && lf.password.invalid, 'is-valid': loginFormSubmitted && !lf.password.invalid }"
+                        [ngClass]="{ 'is-invalid': (loginFormSubmitted && lf.email.invalid) || loginFailed$ | async, 'is-valid': loginFormSubmitted && !lf.password.invalid }"
                         required>
                       <div *ngIf="loginForm.get('password').errors"
-                        class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Esto es requerido
+                        class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Este campo es obligatorio
                       </div>
                     </div>
                     <div class="d-sm-flex justify-content-between mb-3 font-small-2">

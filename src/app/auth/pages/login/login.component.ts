@@ -1,12 +1,12 @@
 import { Router } from "@angular/router";
-import { ChangeDetectorRef, Component } from "@angular/core";
-import { NgxSpinnerService } from "ngx-spinner";
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { NgxSpinnerService } from "ngx-spinner";
 import { LoginService } from "app/auth/services/login.service";
 import { Store } from "@ngrx/store";
 import { AppState } from "app/reducers";
-import { tap } from "rxjs/operators";
-import { noop } from "rxjs";
+import { finalize, tap } from "rxjs/operators";
+import { BehaviorSubject, noop } from "rxjs";
 import { loginAction } from "app/auth/auth.actions";
 import { User } from '../../models/user.model';
 import { userRolesDashboardPaths } from '../../user-roles';
@@ -19,8 +19,8 @@ import { ToastrService } from "ngx-toastr";
 })
 export class LoginComponent {
 
+  loginFailed$;
   loginFormSubmitted = false;
-  isLoginFailed = false;
   user!: gapi.auth2.GoogleUser;
 
   loginForm = new FormGroup({
@@ -42,6 +42,10 @@ export class LoginComponent {
     private toastr: ToastrService
   ) {}
 
+  ngOnInit() {
+    this.loginFailed$ = new BehaviorSubject(false); 
+  }
+
   // On submit button click
   onSubmit() {
     this.loginService.observable().subscribe((user) => {
@@ -53,9 +57,19 @@ export class LoginComponent {
 
     if (this.loginForm.invalid) { return; }
 
+    // Mostrar el indicador de carga
+    this.spinner.show(undefined, {
+      size: "medium",
+      bdColor: "rgba(0, 0, 0, 0.8)",
+      color: "#fff",
+      fullScreen: true,
+    });
+    
     this.loginService.login(this.loginForm.value)
       .pipe(
         tap(res => {
+          this.loginFailed$.next(false);
+
           // Convertir la respuesta del servidor en un objeto del tipo User
           const user: User = {
             data: res['usuario'],
@@ -67,21 +81,17 @@ export class LoginComponent {
 
           // Navegar hacia el dashboard
           this.router.navigateByUrl(userRolesDashboardPaths[user.data.rol]);
-        })
+        }),
+        finalize(() => this.spinner.hide())
       )
-      .subscribe(noop, (err) => {
-        this.toastr.error(`${err}`, '¡Error!');
-      });
+      .subscribe(
+        noop, 
+        () => {
+          this.loginFailed$.next(true);
+          this.toastr.error('Verifique e intente nuevamente.', '¡Error! Usuario o contraseña incorrectos.')
+        }
+      );
 
-    // this.spinner.show(undefined, {
-    //   type: "ball-triangle-path",
-    //   size: "medium",
-    //   bdColor: "rgba(0, 0, 0, 0.8)",
-    //   color: "#fff",
-    //   fullScreen: true,
-    // });
-
-    // this.spinner.hide();
   }
 
   signIn() {
