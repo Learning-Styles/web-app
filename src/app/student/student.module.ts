@@ -9,6 +9,10 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { HelpComponent } from './pages/help/help.component';
 import { HistoryComponent } from './pages/history/history.component';
 
+import { NgSelectModule } from "@ng-select/ng-select";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { SwiperModule } from "ngx-swiper-wrapper";
+
 
 @NgModule({
   declarations: [
@@ -17,11 +21,14 @@ import { HistoryComponent } from './pages/history/history.component';
     DashboardComponent,
     ProfileComponent,
     HelpComponent,
-    HistoryComponent
+    HistoryComponent,
   ],
   imports: [
     CommonModule,
-    StudentRoutingModule
+    StudentRoutingModule,
+    NgbModule,
+    SwiperModule,
+    NgSelectModule
   ]
 })
 export class StudentModule { }

@@ -29,15 +29,25 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { environment } from '../environments/environment';
 
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelPropagation: false,
+};
+
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto'
 };
 
 @NgModule({
   declarations: [AppComponent, ErrorComponent, FullLayoutComponent],
   imports: [
     NgbModule,
+    SwiperModule,
     SharedModule,
     RouterModule,
     NgxSpinnerModule,
@@ -69,6 +79,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
     WINDOW_PROVIDERS,
+    {
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG
+    }
   ],
   bootstrap: [AppComponent],
 })
