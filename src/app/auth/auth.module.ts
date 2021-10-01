@@ -12,6 +12,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { RolComponent } from './pages/rol/rol.component';
 import { StoreModule } from '@ngrx/store';
 import * as fromAuth from './reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth.effects';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import * as fromAuth from './reducers';
     NgxSpinnerModule,
     HttpClientModule,
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.authReducer),
+    EffectsModule.forFeature([AuthEffects])
   ]
 })
 export class AuthModule {}

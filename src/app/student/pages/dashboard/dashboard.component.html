@@ -1,1 +1,113 @@
-<p>Dashboard works!</p>
+<section class="page-user-profile">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="user-profile-images">
+          <!-- user timeline image -->
+          <img src="assets/img/banner/profile-image.jpg" class="img-fluid rounded-top user-timeline-image" alt="User Timeline Image">
+          <!-- user profile image -->
+          <img src="assets/img/portrait/small/avatar-s-20.png" class="user-profile-image rounded" alt="User Profile Image" height="140" width="140">
+        </div>
+        <div class="user-profile-text">
+          <h4 class="profile-text-color mb-0">{{ (userData$ | async).nombre }}</h4>
+          <small>{{ (userData$ | async).rol }}</small>
+        </div>
+        <!-- user profile body start -->
+        <div class="card-content">
+          <div class="card-body">
+            <div class="user-profile-buttons d-flex justify-content-center justify-content-sm-start">
+              <a class="btn btn-primary mr-3" routerLink="/student/profile">Mi perfil</a>
+            </div>
+          </div>
+          <!-- user profile body ends -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="row profile-info-posts" *ngIf="!(areFormsIds$ | async)">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="card-title m-0">¡Atención!</h4>
+        <span class="cursor-pointer"><i class="ft-more-vertical-"></i></span>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <p class="m-0">
+            Bienvenido a Learning Styles, {{ (userData$ | async).nombre }}. Esta herramienta te 
+            permitirá mejorar la forma en la que aprendes, primero midiendo tu estilo de aprendizaje,
+            y luego dándote pautas para asimilar el conocimiento de la mejor manera posible. Para comenzar, 
+            te invitamos a llenar tu primer formulario de estilos de aprendizaje. Para ello, dale clic al
+            botón de abajo. 
+          </p>
+          <div class="user-profile-buttons d-flex justify-content-center justify-content-sm-start">
+            <button class="btn btn-primary mt-3">Comenzar</button>
+          </div>
+        </div>
+        <!-- user profile body ends -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="(areFormsIds$ | async)">
+  <div class="col-12">
+      <div class="content-header">Bienvenid@, {{ (userData$ | async).nombre }}</div>
+      <p class="mt-2">
+        Aquí tienes un resumen de tu estilo de aprendizaje promedio. Para ver tu historial completo, haz click aquí.
+      </p>
+  </div>
+</div>
+
+<div class="row text-left" *ngIf="(areFormsIds$ | async)">
+  <div class="col-sm-6">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Radar Chart</h4>
+          </div>
+          <div class="card-content">
+              <div class="card-body">
+                  <div id="radar-chart1" class="height-400">
+                      <canvas baseChart 
+                              class="chart" 
+                              [datasets]="radarChartData" 
+                              [labels]="radarChartLabels" 
+                              [options]="radarChartOptions" 
+                              [chartType]="radarChartType" 
+                              [colors]="radarChartColors" 
+                              (chartHover)="chartHovered($event)"
+                              (chartClick)="chartClicked($event)">
+                      </canvas>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-sm-6">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Bar Chart</h4>
+          </div>
+          <div class="card-content">
+              <div class="card-body">
+                  <div id="bar-bar1" class="height-400">
+                      <canvas baseChart 
+                              class="chart" 
+                              [datasets]="barChartData" 
+                              [labels]="barChartLabels" 
+                              [options]="barChartOptions" 
+                              [colors]="barChartColors" 
+                              [legend]="barChartLegend"
+                              [chartType]="barChartType" 
+                              (chartHover)="chartHovered($event)" 
+                              (chartClick)="chartClicked($event)">
+                      </canvas>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

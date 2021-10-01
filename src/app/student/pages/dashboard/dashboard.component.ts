@@ -10,6 +10,8 @@ import { DOCUMENT } from '@angular/common';
 import { ConfigService } from 'app/shared/services/config.service';
 import { LayoutService } from 'app/shared/services/layout.service';
 import { SwiperDirective, SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import * as chartsData from '../chartJS/chartjs';
+import { areFormIds } from '../../student.selectors';
 
 
 @Component({
@@ -30,8 +32,26 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(SwiperDirective, { static: false }) directiveRef?: SwiperDirective;
 
-  // Emite la información del usuario logeado
+  // Emite la información personal del estudiante logeado
   userData$: Observable<UserData>;
+
+  // Emite si el estudiante ha presentado formularios o no
+  areFormsIds$: Observable<boolean>;
+
+  // barChart
+  public barChartOptions = chartsData.barChartOptions;
+  public barChartLabels = chartsData.barChartLabels;
+  public barChartType = chartsData.barChartType;
+  public barChartLegend = chartsData.barChartLegend;
+  public barChartData = chartsData.barChartData;
+  public barChartColors = chartsData.barChartColors;
+
+  // Radar
+  public radarChartLabels = chartsData.radarChartLabels;
+  public radarChartData = chartsData.radarChartData;
+  public radarChartType = chartsData.radarChartType;
+  public radarChartColors = chartsData.radarChartColors;
+  public radarChartOptions = chartsData.radarChartOptions;
 
   constructor(private router: Router, 
     private store: Store<AppState>,
@@ -59,6 +79,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         // Importamos el selector desde el archivo auth.selectors.ts
         select(userData)
       );
+
+    this.areFormsIds$ = this.store
+      .pipe(
+        select(areFormIds)
+      );
   }
 
   ngAfterViewInit() {
@@ -76,4 +101,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  // events
+  public chartClicked(e: any): void {
+    //your code here
+  }
+
+  public chartHovered(e: any): void {
+    //your code here
+  }
 }

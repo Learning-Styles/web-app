@@ -22,11 +22,12 @@ export class LoginComponent {
   loginFailed$;
   loginFormSubmitted = false;
   user!: gapi.auth2.GoogleUser;
+  rememberMe = false;
 
   loginForm = new FormGroup({
     email: new FormControl("alexis@alexis.com", [Validators.required]),
     password: new FormControl("123456", [Validators.required]),
-    rememberMe: new FormControl(true),
+    rememberMe: new FormControl(this.rememberMe),
   });
 
   get lf() {
@@ -69,6 +70,7 @@ export class LoginComponent {
       .pipe(
         tap(res => {
           this.loginFailed$.next(false);
+          const rememberMe = this.lf.rememberMe.value;
 
           // Convertir la respuesta del servidor en un objeto del tipo User
           const user: User = {
@@ -77,7 +79,7 @@ export class LoginComponent {
           };
           
           // Guardar la información del usuario en el Store
-          this.store.dispatch( loginAction( { user } ) );
+          this.store.dispatch( loginAction( { user, rememberMe } ) );
 
           // Navegar hacia el dashboard
           this.router.navigateByUrl(userRolesDashboardPaths[user.data.rol]);
@@ -92,6 +94,11 @@ export class LoginComponent {
         }
       );
 
+  }
+
+  onRemembermeChange() {
+    this.rememberMe = !this.rememberMe;
+    this.lf.rememberMe.setValue(this.rememberMe);
   }
 
   signIn() {

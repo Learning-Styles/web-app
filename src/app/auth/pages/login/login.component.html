@@ -34,7 +34,11 @@
                     <div class="d-sm-flex justify-content-between mb-3 font-small-2">
                       <div class="remember-me mb-2 mb-sm-0">
                         <div class="checkbox auth-checkbox">
-                          <input type="checkbox" formControlName="rememberMe" class="form-control" id="rememberMe">
+                          <input type="checkbox" 
+                                 formControlName="rememberMe" 
+                                 class="form-control" 
+                                 id="rememberMe"
+                                 (change)="onRemembermeChange()">
                           <label for="rememberMe"><span class="font-small-2 mb-3 font-weight-normal">Recuérdame</span></label>
                         </div>
                       </div>

@@ -26,13 +26,17 @@ export const isLoggedOut = createSelector(
     loggedIn => !loggedIn
 );
 
-export const userData= createSelector(
+export const userLoaded = createSelector(
+    selectAuthState,
+    auth => auth.user
+);
+
+export const userData = createSelector(
     selectAuthState,
     auth => auth.user.data
 );
 
-export const userToken= createSelector(
+export const userToken = createSelector(
     selectAuthState,
     auth => auth.user.token
 );
-
