@@ -24,7 +24,10 @@ export class AuthEffects {
                 const studentId = action.user.data._id;
                 const token = action.user.token;
 
-                return AuthActions.userLoaded( { studentId, token } );
+                // TODO: Despachar la acción seguón el tipo de usuario
+                if (action.user.data.rol === 'ESTUDIANTE_ROLE') {
+                    return AuthActions.studentLoaded( { studentId, token } );
+                }
             })
         )
     );

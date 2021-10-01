@@ -10,7 +10,7 @@ export const logoutAction = createAction(
     '[Top Menu] User Logout'
 );
 
-export const userLoaded = createAction(
-    '[Auth Module] User Loaded',
+export const studentLoaded = createAction(
+    '[Auth Module] Student Loaded',
     props<{studentId: string, token: string}>()
 );

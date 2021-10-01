@@ -13,10 +13,11 @@ export class StudentEffects {
 
     constructor(private actions$: Actions, private store: Store, private studentService: StudentService) { }
 
+    // Efecto para traer los formularios del estudiante
     forms$ = createEffect(() =>
         this.actions$
             .pipe(
-                ofType(AuthActions.userLoaded),
+                ofType(AuthActions.studentLoaded),
                 concatMap(action => 
                     this.studentService.getStudentForms(action.studentId, action.token)
                 ),
