@@ -132,7 +132,7 @@
                                 <div class="form-group">
                                     <label for="old-password">Contraseña actual</label>
                                     <div class="controls">
-                                        <input type="password" formControlName="oldPassword" class="form-control"
+                                        <input type="password" formControlName="Contraseña actual" class="form-control"
                                             placeholder="Old Password"
                                             [ngClass]="{ 'is-invalid': changePasswordFormSubmitted && cpf.oldPassword.invalid, 'is-valid': changePasswordFormSubmitted && !cpf.oldPassword.invalid }"
                                             required>
@@ -145,13 +145,13 @@
                                 <div class="form-group">
                                     <label for="new-password">Nueva contraseña</label>
                                     <div class="controls">
-                                        <input type="password" formControlName="newPassword" class="form-control"
+                                        <input type="password" formControlName="Nueva contraseña" class="form-control"
                                             placeholder="New Password"
                                             [ngClass]="{ 'is-invalid': changePasswordFormSubmitted && cpf.newPassword.invalid, 'is-valid': changePasswordFormSubmitted && !cpf.newPassword.invalid }"
                                             required>
                                         <div *ngIf="changePasswordFormSubmitted && (cpf.newPassword.invalid || cpf.newPassword.errors?.required)"
                                             class="help-block mt-1 text-danger"> <i
-                                                class="ft-alert-circle align-middle"></i> This is required
+                                                class="ft-alert-circle align-middle"></i> Es requerido
                                         </div>
                                     </div>
                                 </div>
@@ -159,18 +159,18 @@
                                     <label for="retype-new-password">Repetir contraseña</label>
                                     <div class="controls">
                                         <input type="password" formControlName="retypeNewPassword" class="form-control"
-                                            placeholder="New Password"
+                                            placeholder="Repetir nueva contraseña"
                                             [ngClass]="{ 'is-invalid': changePasswordFormSubmitted && cpf.retypeNewPassword.invalid, 'is-valid': changePasswordFormSubmitted && !cpf.retypeNewPassword.invalid }"
                                             required>
                                         <div *ngIf="changePasswordFormSubmitted && (cpf.retypeNewPassword.invalid || cpf.retypeNewPassword.errors?.required)"
                                             class="help-block mt-1 text-danger"> <i
-                                                class="ft-alert-circle align-middle"></i> This is required
+                                                class="ft-alert-circle align-middle"></i> Es requerido
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-sm-row flex-column justify-content-end">
-                                    <button type="submit" class="btn btn-primary mr-sm-2 mb-1">Save Changes</button>
-                                    <button type="reset" class="btn btn-secondary mb-1">Cancel</button>
+                                    <button type="submit" class="btn btn-primary mr-sm-2 mb-1">Guardar cambios</button>
+                                    <button type="reset" class="btn btn-secondary mb-1">Cancelar</button>
                                 </div>
                             </form>
                         </div>
