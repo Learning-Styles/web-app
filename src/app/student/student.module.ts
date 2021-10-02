@@ -18,6 +18,11 @@ import * as fromStudent from './reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { StudentEffects } from './student.effects';
 
+import { ArchwizardModule } from 'angular-archwizard';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ParseToIntPipe } from './pipes/parse-to-int.pipe';
+import { RadioIdPipe } from './pipes/radio-id.pipe';
+
 
 @NgModule({
   declarations: [
@@ -27,6 +32,8 @@ import { StudentEffects } from './student.effects';
     ProfileComponent,
     HelpComponent,
     HistoryComponent,
+    ParseToIntPipe,
+    RadioIdPipe,
   ],
   imports: [
     CommonModule,
@@ -35,6 +42,9 @@ import { StudentEffects } from './student.effects';
     SwiperModule,
     NgSelectModule,
     ChartsModule,
+    ArchwizardModule,
+    FormsModule,
+    ReactiveFormsModule,
     StoreModule.forFeature(fromStudent.studentFeatureKey, fromStudent.StudentReducer),
     EffectsModule.forFeature([StudentEffects])
   ]

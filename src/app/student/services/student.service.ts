@@ -20,4 +20,8 @@ export class StudentService {
       { headers }
     );
   }
+
+  getChaeaQuestions() {
+    return this.http.get('/assets/data/chaea-form.json');
+  }
 }
