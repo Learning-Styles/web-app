@@ -12,8 +12,8 @@
                 <div class="col-lg-6 col-12 px-4 py-3">
                   <h4 class="mb-2 card-title">Login</h4>
                   <p>Bienvenido de nuevo, inicie sesión en su cuenta.</p>
-                  <ngb-alert type="light-danger" class="mb-2" *ngIf="isLoginFailed" (close)="isLoginFailed = false">
-                    <p class="mb-0">¡Error de inicio de sesion!</p>
+                  <ngb-alert type="light-danger" class="mb-2" *ngIf="error" >
+                    <p class="mb-0 alert alert-danger">¡Error de inicio de sesion Compruebe el usuario y la contraseña!</p>
                   </ngb-alert>
                   <form [formGroup]="loginForm">
                     <div class="form-group">

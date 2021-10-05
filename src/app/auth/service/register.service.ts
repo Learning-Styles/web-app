@@ -1,19 +1,67 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHandler,
+  HttpHeaders,
+  HttpParams,
+} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root",
 })
 export class RegisterService {
-  private urlDesarrollo: string = "http://localhost:8080/api/usuario";
+  private urlDesarrollo: string = "http://localhost:8080/api/";
 
   constructor(private http: HttpClient) {}
 
   Register(usuario: FormGroup): Observable<any> {
     console.log(usuario);
 
-    return this.http.post<FormGroup>(`${this.urlDesarrollo}/nuevo`, usuario);
+    return this.http.post<FormGroup>(
+      `${this.urlDesarrollo}usuario/nuevo`,
+      usuario
+    );
+  }
+
+  Rol(role: string): Observable<any> {
+    const {
+      token,
+      usuario: { _id },
+    } = JSON.parse(localStorage.getItem("token"));
+
+    const body = {
+      rol: role,
+    };
+
+    this.http
+      .put<any>(
+        `${this.urlDesarrollo}usuario/actalizar/${_id}`,
+        { rol: role },
+        {
+          headers: { "x-token": token },
+        }
+      )
+      .subscribe(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+
+    if (role === "ESTUDIANTE_ROLE" || role === "") {
+      return this.http.post<any>(`${this.urlDesarrollo}estudiante/nuevo`, "", {
+        headers: { "x-token": token },
+      });
+    } else {
+      return this.http.post<any>(`${this.urlDesarrollo}profesor/nuevo`, "", {
+        headers: { "x-token": token },
+      });
+    }
   }
 }

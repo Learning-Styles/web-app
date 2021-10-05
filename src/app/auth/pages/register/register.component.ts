@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
           ciudad: ["", Validators.required],
           direccion: ["", Validators.required],
         }),
-        rol: ["", Validators.required],
+        rol: ["USER_ROLE"],
 
         acceptTerms: [false, Validators.requiredTrue],
       },
@@ -102,6 +102,8 @@ export class RegisterComponent implements OnInit {
     this._regisService.Register(this.registerForm.value).subscribe(
       (resp) => {
         console.log(resp);
+        localStorage.setItem('token', JSON.stringify(resp));
+       
       },
       (err) => {
         console.log(err);
@@ -118,6 +120,6 @@ export class RegisterComponent implements OnInit {
       }
     }
 
-    console.log(this.ciudadCol);
+   
   }
 }
