@@ -12,3 +12,8 @@ export const areFormIds = createSelector(
         }
     }
 );
+
+export const studentFormsSelector = createSelector(
+    selectStudentState,
+    student => student.forms
+);
