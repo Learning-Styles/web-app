@@ -1,7 +1,18 @@
 import { Injectable } from "@angular/core";
+<<<<<<< HEAD
 import { HttpClient } from "@angular/common/http";
+=======
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHandler,
+  HttpHeaders,
+  HttpParams,
+} from "@angular/common/http";
+>>>>>>> develop
 import { Observable } from "rxjs";
 import { FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root",

@@ -35,6 +35,8 @@ export class LoginService {
         let id_token = user.getAuthResponse().id_token;
         this.GoogleSignIn(id_token).subscribe(
           (res) => {
+            console.log(res);
+            
             localStorage.setItem("token", res);
           },
           (err) => {

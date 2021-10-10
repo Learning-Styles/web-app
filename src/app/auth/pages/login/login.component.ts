@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { LoginService } from "app/auth/service/login.service";
+import { RegisterService } from "../../service/register.service";
 
 @Component({
   selector: "app-login",
@@ -13,6 +14,8 @@ export class LoginComponent {
   loginFormSubmitted = false;
   isLoginFailed = false;
   user!: gapi.auth2.GoogleUser;
+
+  error: boolean = false;
 
   loginForm = new FormGroup({
     email: new FormControl("guest@apex.com", [Validators.required]),
@@ -28,6 +31,7 @@ export class LoginComponent {
     private router: Router,
     private spinner: NgxSpinnerService,
     private loginServi: LoginService,
+    private RegisterServi: RegisterService,
     private ref: ChangeDetectorRef
   ) {}
 
@@ -54,13 +58,21 @@ export class LoginComponent {
 
     this.loginServi.login(this.loginForm.value).subscribe(
       (res) => {
-        localStorage.setItem("token", res);
+        localStorage.setItem("token", JSON.stringify(res));
+        this.error = false;
+        console.log("resp: " + res);
+
+        if (res.usuario.rol === "USER_ROLE") {
+          this.router.navigate(["/auth/rol"]);
+        } else {
+          this.router.navigate(["/page"]);
+        }
       },
       (err) => {
-        console.log(err);
+        this.error = true;
+        return;
       }
     );
-    this.router.navigate(["/page"]);
   }
 
   signIn() {
