@@ -7,25 +7,33 @@ import { FULL_LAYOUT_ROUTES } from './layouts/full/full-layout-routes';
 
 const appRoutes: Routes = [
   {
-    path: '',
-    redirectTo: 'auth/login',
-    pathMatch: 'full',
+    path: "",
+    redirectTo: "auth/login",
+    pathMatch: "full",
   },
-  { 
-    path: 'auth', 
-    loadChildren: () => import('../app/auth/auth.module').then(m => m.AuthModule)
+  {
+    path: "auth",
+    loadChildren: () =>
+      import("../app/auth/auth.module").then((m) => m.AuthModule),
   },
-  { 
-    path: '', 
-    component: FullLayoutComponent, 
-    children: FULL_LAYOUT_ROUTES
+  {
+    path: "report",
+    loadChildren: () =>
+      import("../app/reportes-graficas/reportes-graficas.module").then(
+        (m) => m.ReportesGraficasModule
+      ),
+  },
+  {
+    path: "",
+    component: FullLayoutComponent,
+    children: FULL_LAYOUT_ROUTES,
     // loadChildren: () => import('../app/layouts/full/full-layout.module').then(m => m.FullLayoutModule)
   },
   {
-    path: '**',
+    path: "**",
     component: ErrorComponent,
-    pathMatch: 'full'
-  }
+    pathMatch: "full",
+  },
 ];
 
 @NgModule({

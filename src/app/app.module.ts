@@ -22,6 +22,7 @@ import { RouterModule } from '@angular/router';
 
 import { ReactiveFormsModule } from "@angular/forms";
 
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelPropagation: false,
