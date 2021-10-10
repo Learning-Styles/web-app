@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { endpoint } from '../../../environments/environment'
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService {
 
-  private urlDesarrollo: string = endpoint;
+  private url: string = endpoint;
 
   constructor(private http: HttpClient) { }
 
@@ -16,7 +17,28 @@ export class StudentService {
     headers = headers.set('x-token', `${token}`)
 
     return this.http.get(
-      `${this.urlDesarrollo}/formulario/formularios/${studentId}`,
+      `${this.url}/formulario/formularios/${studentId}`,
+      { headers }
+    );
+  }
+
+  saveChaeaForm(chaeaForm: any, token: string) {
+    let  headers = new HttpHeaders();
+    headers = headers.set('x-token', `${token}`)
+
+    return this.http.post(
+      `${this.url}/formulario/nuevo`,
+      chaeaForm,
+      { headers }
+    );
+  }
+
+  getChaeaFormById(formId: string, token: string) {
+    let  headers = new HttpHeaders();
+    headers = headers.set('x-token', `${token}`)
+
+    return this.http.get(
+      `${this.url}/formulario/formulario/${formId}`,
       { headers }
     );
   }

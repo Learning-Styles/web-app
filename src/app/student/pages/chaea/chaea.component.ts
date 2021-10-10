@@ -2,6 +2,12 @@ import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { StudentService } from '../../services/student.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'app/reducers';
+import { newForm } from 'app/student/student.actions';
+import { userToken } from 'app/auth/auth.selectors';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chaea',
@@ -12,7 +18,10 @@ export class ChaeaComponent implements OnInit {
 
   chaeaQuestions!: chaeaQuestion[];
   singleQuestionResults!: number[];
-  asnwersForm!: FormGroup;
+  yes: boolean;
+  no: boolean;
+  tokenObs$: Observable<string>;
+  token: string;
 
   generalResult = {
     activo: 0,
@@ -21,11 +30,7 @@ export class ChaeaComponent implements OnInit {
     pragmatico: 0
   };
 
-  get conditions(): FormArray {
-    return this.asnwersForm.get('answers') as FormArray;
-  }
-
-  constructor(private studentService: StudentService, private fb: FormBuilder) { }
+  constructor(private studentService: StudentService, private fb: FormBuilder, private store: Store<AppState>,) { }
 
   ngOnInit(): void {
     // Traer el contenido de las preguntas del cuestionario CHAEA
@@ -35,20 +40,15 @@ export class ChaeaComponent implements OnInit {
     // Inicializar el array que calcula el resultado de cada pregunta individualmente
     this.initSingleQuestionArray();
 
-    // Inicializa el form group
-    this.initAnswersForm();
+    // Usar el selector para traer el token del usuario
+    this.tokenObs$ = this.store.select(userToken);
+
+    // Guardar el token en una propiedad de clase
+    this.tokenObs$.subscribe(token => this.token = token);
   }
     
   initSingleQuestionArray() {
     this.singleQuestionResults = new Array(80).fill(0);
-  }
-  
-  initAnswersForm() {
-    this.asnwersForm = this.fb.group({
-      answers: this.fb.array([])
-    });
-
-    //TODO: Inicializar el arreglo de radio en el form group
   }
 
   computeSingleQuestionResult(mode: string, id: string) {
@@ -71,8 +71,11 @@ export class ChaeaComponent implements OnInit {
   }
 
   sendForm() {
+    // Calcular el resultado del formulario CHAEA
     this.computeGeneralResult();
-    console.log(this.generalResult);
+    
+    // Despachar la acción para guardar el nuevo formulario
+    this.store.dispatch( newForm( { chaeaForm: this.generalResult, token: this.token } ) );
   }
 
 }

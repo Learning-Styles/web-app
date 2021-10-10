@@ -22,6 +22,7 @@ import { ArchwizardModule } from 'angular-archwizard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ParseToIntPipe } from './pipes/parse-to-int.pipe';
 import { RadioIdPipe } from './pipes/radio-id.pipe';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { RadioIdPipe } from './pipes/radio-id.pipe';
     SwiperModule,
     NgSelectModule,
     ChartsModule,
+    NgxDatatableModule,
     ArchwizardModule,
     FormsModule,
     ReactiveFormsModule,

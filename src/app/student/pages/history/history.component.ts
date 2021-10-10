@@ -7,6 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoryComponent implements OnInit {
 
+  public rows;
+
+  // column header
+  public columns = [
+    { name: 'Name', prop: 'full_name' },
+    { name: 'Email', prop: 'email' },
+    { name: 'Age', prop: 'age' },
+    { name: 'Salary', prop: 'salary' }
+  ];
+
+  public ColumnMode;
+
   constructor() { }
 
   ngOnInit(): void {

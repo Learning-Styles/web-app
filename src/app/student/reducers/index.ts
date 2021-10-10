@@ -27,5 +27,10 @@ export const StudentReducer = createReducer(
     return {
       forms: action.forms
     }
+  }),
+  on(StudentActions.newFormCreated, (state, action) => {
+    return {
+      forms: [...state.forms, action.form]
+    }
   })
 );
