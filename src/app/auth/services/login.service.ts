@@ -2,24 +2,23 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Observable, ReplaySubject } from "rxjs";
+import { endpoint, google_client_id } from "../../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class LoginService {
   private auth2!: gapi.auth2.GoogleAuth;
-
   private subject = new ReplaySubject<gapi.auth2.GoogleUser>(1);
+  private urlDesarrollo: string = endpoint;
+
   constructor(private http: HttpClient) {
     gapi.load("auth2", () => {
       this.auth2 = gapi.auth2.init({
-        client_id:
-          "65224485945-p4j4p9fov31nq054pvvitrrstuj8t1so.apps.googleusercontent.com",
+        client_id: google_client_id,
       });
     });
   }
-
-  private urlDesarrollo: string = "http://localhost:8080/api";
 
   login(usuario: FormGroup): Observable<any> {
     return this.http.post<FormGroup>(
@@ -33,10 +32,9 @@ export class LoginService {
       .signIn({})
       .then((user) => {
         let id_token = user.getAuthResponse().id_token;
+
         this.GoogleSignIn(id_token).subscribe(
           (res) => {
-            console.log(res);
-            
             localStorage.setItem("token", res);
           },
           (err) => {
@@ -56,7 +54,8 @@ export class LoginService {
       this.subject.next(null!);
     });
   }
-  obsercavle(): Observable<gapi.auth2.GoogleUser> {
+
+  observable(): Observable<gapi.auth2.GoogleUser> {
     return this.subject.asObservable();
   }
 

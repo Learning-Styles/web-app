@@ -1,9 +1,16 @@
 import { Router } from "@angular/router";
-import { ChangeDetectorRef, Component } from "@angular/core";
-import { NgxSpinnerService } from "ngx-spinner";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { LoginService } from "app/auth/service/login.service";
-import { RegisterService } from "../../service/register.service";
+import { NgxSpinnerService } from "ngx-spinner";
+import { LoginService } from "app/auth/services/login.service";
+import { Store } from "@ngrx/store";
+import { AppState } from "app/reducers";
+import { finalize, tap } from "rxjs/operators";
+import { BehaviorSubject, noop } from "rxjs";
+import { loginAction } from "app/auth/auth.actions";
+import { User } from "../../models/user.model";
+import { userRolesDashboardPaths } from "../../user-roles";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-login",
@@ -11,16 +18,17 @@ import { RegisterService } from "../../service/register.service";
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent {
+  loginFailed$;
   loginFormSubmitted = false;
-  isLoginFailed = false;
   user!: gapi.auth2.GoogleUser;
+  rememberMe = false;
 
   error: boolean = false;
 
   loginForm = new FormGroup({
-    email: new FormControl("guest@apex.com", [Validators.required]),
-    password: new FormControl("Password", [Validators.required]),
-    rememberMe: new FormControl(true),
+    email: new FormControl("alexis@alexis.com", [Validators.required]),
+    password: new FormControl("123456", [Validators.required]),
+    rememberMe: new FormControl(this.rememberMe),
   });
 
   get lf() {
@@ -30,56 +38,77 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private spinner: NgxSpinnerService,
-    private loginServi: LoginService,
-    private RegisterServi: RegisterService,
-    private ref: ChangeDetectorRef
+    private loginService: LoginService,
+    private ref: ChangeDetectorRef,
+    private store: Store<AppState>,
+    private toastr: ToastrService
   ) {}
+
+  ngOnInit() {
+    this.loginFailed$ = new BehaviorSubject(false);
+  }
 
   // On submit button click
   onSubmit() {
-    this.loginServi.obsercavle().subscribe((user) => {
+    this.loginService.observable().subscribe((user) => {
       this.user = user;
       this.ref.detectChanges();
     });
+
     this.loginFormSubmitted = true;
+
     if (this.loginForm.invalid) {
       return;
     }
 
+    // Mostrar el indicador de carga
     this.spinner.show(undefined, {
-      type: "ball-triangle-path",
       size: "medium",
       bdColor: "rgba(0, 0, 0, 0.8)",
       color: "#fff",
       fullScreen: true,
     });
 
-    this.spinner.hide();
+    this.loginService
+      .login(this.loginForm.value)
+      .pipe(
+        tap((res) => {
+          this.loginFailed$.next(false);
+          const rememberMe = this.lf.rememberMe.value;
 
-    this.loginServi.login(this.loginForm.value).subscribe(
-      (res) => {
-        localStorage.setItem("token", JSON.stringify(res));
-        this.error = false;
-        console.log("resp: " + res);
+          // Convertir la respuesta del servidor en un objeto del tipo User
+          const user: User = {
+            data: res["usuario"],
+            token: res["token"],
+          };
 
-        if (res.usuario.rol === "USER_ROLE") {
-          this.router.navigate(["/auth/rol"]);
-        } else {
-          this.router.navigate(["/page"]);
-        }
-      },
-      (err) => {
-        this.error = true;
-        return;
-      }
-    );
+          // Guardar la información del usuario en el Store
+          this.store.dispatch(loginAction({ user, rememberMe }));
+
+          // Navegar hacia el dashboard
+          this.router.navigateByUrl(userRolesDashboardPaths[user.data.rol]);
+        }),
+        finalize(() => this.spinner.hide())
+      )
+      .subscribe(noop, () => {
+        this.loginFailed$.next(true);
+        this.toastr.error(
+          "Verifique e intente nuevamente.",
+          "¡Error! Usuario o contraseña incorrectos."
+        );
+      });
+  }
+
+  onRemembermeChange() {
+    this.rememberMe = !this.rememberMe;
+    this.lf.rememberMe.setValue(this.rememberMe);
   }
 
   signIn() {
-    this.loginServi.signIn();
+    this.loginService.signIn();
   }
 
   signOut() {
-    this.loginServi.signOut();
+    this.loginService.signOut();
   }
 }

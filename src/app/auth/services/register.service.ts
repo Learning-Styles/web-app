@@ -8,13 +8,13 @@ import {
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
+import { endpoint } from "../../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class RegisterService {
-  private urlDesarrollo: string = "http://localhost:8080/api/";
+  private urlDesarrollo: string = endpoint;
 
   constructor(private http: HttpClient) {}
 

@@ -1,1 +1,58 @@
-<p>history works!</p>
+
+<div class="row profile-info-posts" *ngIf="!(areForms$ | async)">
+    <div class="col-12">
+        <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="card-title m-0">¡Atención!</h4>
+            <span class="cursor-pointer"><i class="ft-more-vertical-"></i></span>
+        </div>
+        <div class="card-content">
+            <div class="card-body">
+            <p class="m-0">
+                Bienvenido a Learning Styles, {{ (userData$ | async).nombre }}. Esta herramienta te 
+                permitirá mejorar la forma en la que aprendes, primero midiendo tu estilo de aprendizaje,
+                y luego dándote pautas para asimilar el conocimiento de la mejor manera posible. Para comenzar, 
+                te invitamos a llenar tu primer formulario de estilos de aprendizaje. Para ello, dale clic al
+                botón de abajo. 
+            </p>
+            <div class="user-profile-buttons d-flex justify-content-center justify-content-sm-start">
+                <button class="btn btn-primary mt-3">Comenzar</button>
+            </div>
+            </div>
+            <!-- user profile body ends -->
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Basic Datatables -->
+<section id="ngx-datatable-basic" *ngIf="(areForms$ | async)">
+    <div class="row">
+        <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+            <h4 class="card-title">Mi historial de formularios</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <ngx-datatable  [rowHeight]="50" class="bootstrap core-bootstrap" [limit]="10"
+                    [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+                        <ngx-datatable-column
+                            name="#" 
+                            prop="_id" 
+                            [width]="50">
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Fecha de presentación" prop="create_ad" [width]="150"></ngx-datatable-column>
+                        <ngx-datatable-column name="Acciones" [width]="70">
+                            <ng-template ngx-datatable-cell-template>
+                            <i class="ft-more-vertical text-primary cursor-pointer mr-2"></i>
+                            <i class="ft-edit text-primary cursor-pointer"></i>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>

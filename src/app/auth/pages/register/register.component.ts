@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import states from "../../../../assets/json/states.json";
 import cities from "../../../../assets/json/cities.json";
 
-import { RegisterService } from "../../service/register.service";
+import { RegisterService } from "../../services/register.service";
 
 @Component({
   selector: "app-register",
@@ -18,10 +18,10 @@ export class RegisterComponent implements OnInit {
   registerFormSubmitted = false;
   registerForm: FormGroup;
 
-  departamentosAll: any[] = states.states;
+  departamentosAll: any[] = states['states'];
   departamentosCol: any[] = [];
 
-  ciudadAll: any[] = cities.cities;
+  ciudadAll: any[] = cities['cities'];
   ciudadCol: any[] = [];
 
   get rf() {
@@ -114,6 +114,9 @@ export class RegisterComponent implements OnInit {
   }
 
   cuidadFuncion(data: string) {
+    this.ciudadCol = [];
+    console.log(data);
+
     for (let index = 0; index < this.ciudadAll.length; index++) {
       if (this.ciudadAll[index].id_state == data) {
         this.ciudadCol.push(this.ciudadAll[index]);
