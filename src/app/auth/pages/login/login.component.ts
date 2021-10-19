@@ -75,7 +75,8 @@ export class LoginComponent {
         tap((res) => {
           this.loginFailed$.next(false);
           const rememberMe = this.lf.rememberMe.value;
-
+          let token = JSON.stringify(res);
+          localStorage.setItem("token", token);
           // Convertir la respuesta del servidor en un objeto del tipo User
           const user: User = {
             data: res["usuario"],
@@ -90,7 +91,8 @@ export class LoginComponent {
         }),
         finalize(() => this.spinner.hide())
       )
-      .subscribe(noop, () => {
+      .subscribe(noop, (resp) => {
+
         this.loginFailed$.next(true);
         this.toastr.error(
           "Verifique e intente nuevamente.",

@@ -12,6 +12,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
+              "chart.js",
               "firebase/app",
               "@mattlewis92/dom-autoscroller",
               "angular-calendar/date-adapters/date-fns",
@@ -49,7 +50,8 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/vendor/pace/pace.min.js"
+              "src/assets/vendor/pace/pace.min.js",
+               "node_modules/apexcharts/dist/apexcharts.min.js"
             ]
           },
           "configurations": {
