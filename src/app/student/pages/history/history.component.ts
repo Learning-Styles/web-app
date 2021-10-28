@@ -103,7 +103,7 @@ export class HistoryComponent implements OnInit {
             return;
           }
         }
-
+        
         const values = Object.values(formulario.formulario);
         const fecha = new Date(formulario.create_ad).toLocaleDateString();
         const color = "#xxxxxx".replace(/x/g, (y) =>
