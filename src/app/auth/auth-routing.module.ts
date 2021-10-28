@@ -6,31 +6,35 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
-
+import { RolComponent } from "./pages/rol/rol.component";
 
 const AUTH_ROUTES: Routes = [
   {
-    path: '',
+    path: "",
     component: AuthComponent,
     children: [
       {
-        path: 'login',
-        component: LoginComponent
+        path: "login",
+        component: LoginComponent,
       },
       {
-        path: 'register',
-        component: RegisterComponent
+        path: "register",
+        component: RegisterComponent,
       },
       {
-        path: 'forgot-password',
-        component: ForgotPasswordComponent
+        path: "forgot-password",
+        component: ForgotPasswordComponent,
       },
       {
-        path: '**',
-        redirectTo: 'login'
-      }
-    ]
-  }
+        path: "rol",
+        component: RolComponent,
+      },
+      {
+        path: "**",
+        redirectTo: "login",
+      },
+    ],
+  },
 ];
 
 

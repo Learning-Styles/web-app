@@ -1,0 +1,53 @@
+<div class="row profile-info-posts" *ngIf="!(areForms$ | async)">
+  <div class="col-12">
+    <div class="card">
+      <div
+        class="card-header d-flex justify-content-between align-items-center"
+      >
+        <h4 class="card-title m-0">Resultados</h4>
+        <span class="cursor-pointer"><i class="ft-more-vertical-"></i></span>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <div>
+            <h3>Formularios Realizados</h3>
+            <ngx-datatable
+              class="material"
+              [rows]="rows"
+              [columnMode]="ColumnMode.force"
+              [columns]="columns"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              rowHeight="auto"
+              [limit]="5"
+              [selected]="selected"
+              [selectionType]="SelectionType.multi"
+              (select)="onSelect($event)"
+            >
+            </ngx-datatable>
+          </div>
+
+          <h1>Graficas</h1>
+          <div class="row" *ngIf="dataExist">
+            <div class="col-md-6">
+       
+              <app-graficas 
+                            [barChartData]="Data"
+                            [barChartLabels]="Labels"
+                            >
+                          </app-graficas>
+            </div>
+            <div class="col-md-6">
+       
+             <app-radar
+             [radarChartLabels]="Labels"
+             [radarChartData]="Data">
+
+             </app-radar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

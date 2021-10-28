@@ -1,5 +1,5 @@
 import { Router } from "@angular/router";
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 import { LoginService } from "app/auth/services/login.service";
@@ -8,8 +8,8 @@ import { AppState } from "app/reducers";
 import { finalize, tap } from "rxjs/operators";
 import { BehaviorSubject, noop } from "rxjs";
 import { loginAction } from "app/auth/auth.actions";
-import { User } from '../../models/user.model';
-import { userRolesDashboardPaths } from '../../user-roles';
+import { User } from "../../models/user.model";
+import { userRolesDashboardPaths } from "../../user-roles";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -18,11 +18,12 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent {
-
   loginFailed$;
   loginFormSubmitted = false;
   user!: gapi.auth2.GoogleUser;
   rememberMe = false;
+
+  error: boolean = false;
 
   loginForm = new FormGroup({
     email: new FormControl("alexis@alexis.com", [Validators.required]),
@@ -44,7 +45,7 @@ export class LoginComponent {
   ) {}
 
   ngOnInit() {
-    this.loginFailed$ = new BehaviorSubject(false); 
+    this.loginFailed$ = new BehaviorSubject(false);
   }
 
   // On submit button click
@@ -56,7 +57,9 @@ export class LoginComponent {
 
     this.loginFormSubmitted = true;
 
-    if (this.loginForm.invalid) { return; }
+    if (this.loginForm.invalid) {
+      return;
+    }
 
     // Mostrar el indicador de carga
     this.spinner.show(undefined, {
@@ -65,35 +68,37 @@ export class LoginComponent {
       color: "#fff",
       fullScreen: true,
     });
-    
-    this.loginService.login(this.loginForm.value)
+
+    this.loginService
+      .login(this.loginForm.value)
       .pipe(
-        tap(res => {
+        tap((res) => {
           this.loginFailed$.next(false);
           const rememberMe = this.lf.rememberMe.value;
-
+          let token = JSON.stringify(res);
+          localStorage.setItem("token", token);
           // Convertir la respuesta del servidor en un objeto del tipo User
           const user: User = {
-            data: res['usuario'],
-            token: res['token']
+            data: res["usuario"],
+            token: res["token"],
           };
-          
+
           // Guardar la información del usuario en el Store
-          this.store.dispatch( loginAction( { user, rememberMe } ) );
+          this.store.dispatch(loginAction({ user, rememberMe }));
 
           // Navegar hacia el dashboard
           this.router.navigateByUrl(userRolesDashboardPaths[user.data.rol]);
         }),
         finalize(() => this.spinner.hide())
       )
-      .subscribe(
-        noop, 
-        () => {
-          this.loginFailed$.next(true);
-          this.toastr.error('Verifique e intente nuevamente.', '¡Error! Usuario o contraseña incorrectos.')
-        }
-      );
+      .subscribe(noop, (resp) => {
 
+        this.loginFailed$.next(true);
+        this.toastr.error(
+          "Verifique e intente nuevamente.",
+          "¡Error! Usuario o contraseña incorrectos."
+        );
+      });
   }
 
   onRemembermeChange() {

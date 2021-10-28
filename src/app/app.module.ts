@@ -32,58 +32,63 @@ import { environment } from '../environments/environment';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+ import { ChartsModule } from "ng2-charts";
 
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true,
-  wheelPropagation: false,
-};
+ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+   suppressScrollX: true,
+   wheelPropagation: false,
+ };
 
-const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
-  direction: 'horizontal',
-  slidesPerView: 'auto'
-};
+ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+   direction: "horizontal",
+   slidesPerView: "auto",
+ };
 
-@NgModule({
-  declarations: [AppComponent, ErrorComponent, FullLayoutComponent],
-  imports: [
-    NgbModule,
-    SwiperModule,
-    SharedModule,
-    RouterModule,
-    NgxSpinnerModule,
-    AppRoutingModule,
-    HttpClientModule,
-    PerfectScrollbarModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    ToastrModule.forRoot(),
-    StoreModule.forRoot(reducers, {
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
-        strictStateSerializability: true,
-        strictActionSerializability: true
-      }
-    }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([]),
-    StoreRouterConnectingModule.forRoot({
-      stateKey: 'router',
-      routerState: RouterState.Minimal
-    })
-  ],
-  providers: [
-    {
-      provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-    },
-    WINDOW_PROVIDERS,
-    {
-      provide: SWIPER_CONFIG,
-      useValue: DEFAULT_SWIPER_CONFIG
-    }
-  ],
-  bootstrap: [AppComponent],
-})
-export class AppModule {}
+ @NgModule({
+   declarations: [AppComponent, ErrorComponent, FullLayoutComponent],
+   imports: [
+     NgbModule,
+     SwiperModule,
+     SharedModule,
+     ChartsModule,
+     RouterModule,
+     NgxSpinnerModule,
+     AppRoutingModule,
+     HttpClientModule,
+     PerfectScrollbarModule,
+     BrowserAnimationsModule,
+     ReactiveFormsModule,
+     ToastrModule.forRoot(),
+     StoreModule.forRoot(reducers, {
+       metaReducers,
+       runtimeChecks: {
+         strictStateImmutability: true,
+         strictActionImmutability: true,
+         strictStateSerializability: true,
+         strictActionSerializability: true,
+       },
+     }),
+     StoreDevtoolsModule.instrument({
+       maxAge: 25,
+       logOnly: environment.production,
+     }),
+     EffectsModule.forRoot([]),
+     StoreRouterConnectingModule.forRoot({
+       stateKey: "router",
+       routerState: RouterState.Minimal,
+     }),
+   ],
+   providers: [
+     {
+       provide: PERFECT_SCROLLBAR_CONFIG,
+       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+     },
+     WINDOW_PROVIDERS,
+     {
+       provide: SWIPER_CONFIG,
+       useValue: DEFAULT_SWIPER_CONFIG,
+     },
+   ],
+   bootstrap: [AppComponent],
+ })
+ export class AppModule {}

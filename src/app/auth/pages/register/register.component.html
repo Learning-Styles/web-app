@@ -1,153 +1,276 @@
 <!--Registration Page Starts-->
 <section id="regestration">
-    <div class="row auth-height full-height-vh m-0">
-      <div class="col-12 d-flex align-items-center justify-content-center">
-        <div class="card overflow-hidden">
-          <div class="card-content">
-            <div class="card-body auth-img">
-              <div class="row m-0">
-                <div
-                  class="col-lg-6 d-none d-lg-flex justify-content-center align-items-center text-center auth-img-bg py-2">
-                  <img src="assets/img/gallery/register.png" alt="" class="img-fluid" width="350" height="230">
-                </div>
-                <div class="col-lg-6 col-md-12 px-4 py-3">
-                  <h4 class="card-title mb-2">Crear una cuenta</h4>
-                  <p>Complete el siguiente formulario para crear una nueva cuenta.</p>
-  
-                  <form [formGroup]="registerForm">
-                    <div class="form-group">
-                      <input type="text" formControlName="nombre" class="form-control mb-2" placeholder="Nombre"
-                        [ngClass]="{ 'is-invalid': registerFormSubmitted && rf.name.invalid, 'is-valid': registerFormSubmitted && !rf.name.invalid }"
-                        required>
-                      <div *ngIf="registerForm.get('nombre').errors"
-                        class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Se requiere el nombre</div>
-                    </div>
-                    <div class="form-group">
-                      <input type="email" formControlName="email" class="form-control mb-2" placeholder="Correo"
-                        [ngClass]="{ 'is-invalid': registerFormSubmitted && rf.email.invalid, 'is-valid': registerFormSubmitted && !rf.email.invalid }"
-                        required>
-                      <div *ngIf="registerForm.get('email').errors"
-                        class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> correo electronico es requerido</div>
-                      <div *ngIf="registerForm.get('email').errors?.email" class="help-block mt-1 text-danger"> <i
-                          class="ft-alert-circle align-middle"></i> El correo electrónico debe ser una dirección de correo electrónico válida</div>
-                    </div>
-                    <div class="form-group">
-                      <input type="password" formControlName="password" class="form-control mb-2" placeholder="Password"
-                        [ngClass]="{ 'is-invalid': registerFormSubmitted && rf.password.invalid, 'is-valid': registerFormSubmitted && !rf.password.invalid }"
-                        required>
-                      <div *ngIf="registerForm.get('password').errors"
-                        class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> se requiere contraseña
-                      </div>
-                      <div *ngIf="registerForm.get('password').errors?.minlength"
-                        class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> La contraseña debe tener al menos 6 caracteres
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <input type="password" formControlName="confirmPassword" class="form-control mb-2"
-                        placeholder="Confirm Password"
-                        [ngClass]="{ 'is-invalid': registerFormSubmitted && rf.confirmPassword.invalid, 'is-valid': registerFormSubmitted && !rf.confirmPassword.invalid }"
-                        required>
-                      <div
-                        *ngIf="registerFormSubmitted && (rf.confirmPassword.errors?.required)"
-                        class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Se requiere confirmación de contraseña
-                      </div>
-                      <div *ngIf="registerFormSubmitted && (rf.confirmPassword.errors?.mustMatch)"
-                        class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Passwords must
-                        match
-                      </div>
-                    </div>
-                    <!-- Mio-------------------------------- -->
+  <div class="row auth-height full-height-vh m-0">
+    <div class="col-12 d-flex align-items-center justify-content-center">
+      <div class="card overflow-hidden">
+        <div class="card-content">
+          <div class="card-body auth-img">
+            <div class="row m-0">
+              <div
+                class="
+                  col-lg-6
+                  d-none d-lg-flex
+                  justify-content-center
+                  align-items-center
+                  text-center
+                  auth-img-bg
+                  py-2
+                "
+              >
+                <img
+                  src="assets/img/gallery/register.png"
+                  alt=""
+                  class="img-fluid"
+                  width="350"
+                  height="230"
+                />
+              </div>
+              <div class="col-lg-6 col-md-12 px-4 py-3">
+                <h4 class="card-title mb-2">Crear una cuenta</h4>
+                <p>
+                  Complete el siguiente formulario para crear una nueva cuenta.
+                </p>
 
-                    <div class="form-group">
-                      <label for="domicilio" class="form-label">Genero</label>
-                      <select class=" form-control form-select-sm" aria-label=".form-select-sm example" formControlName="genero" >                       
-                          <option value="Masculino">Masculino</option>
-                         <option value="Femenino">Femenino</option>
-                         <option value="binario">No binario</option>
-                      </select>
-                    </div>
-
-
-                    <div class="form-group">
-                      <label for="domicilio" class="form-label">Domicilio:</label>
-                      
-
-              
-                     <div class="row m-0" formGroupName="domicilio">
+                <form [formGroup]="registerForm">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      formControlName="nombre"
+                      class="form-control mb-2"
+                      placeholder="Nombre"
                  
-                       <!-- <label for="inputEmail3" class="col-sm-3 col-form-label">Pais: </label>
+                      
+                    />
+                    <div
+                      *ngIf="registerForm.get('nombre').errors"
+                      class="help-block mt-1 text-danger"
+                    >
+                      <i class="ft-alert-circle align-middle"></i> Se requiere
+                      el nombre
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="email"
+                      formControlName="email"
+                      class="form-control mb-2"
+                      placeholder="Correo"
+                      [ngClass]="{
+                        'is-invalid': registerFormSubmitted && rf.email.invalid,
+                        'is-valid': registerFormSubmitted && !rf.email.invalid
+                      }"
+                      required
+                    />
+                    <div
+                      *ngIf="registerForm.get('email').errors"
+                      class="help-block mt-1 text-danger"
+                    >
+                      <i class="ft-alert-circle align-middle"></i> correo
+                      electronico es requerido
+                    </div>
+                    <div
+                      *ngIf="registerForm.get('email').errors?.email"
+                      class="help-block mt-1 text-danger"
+                    >
+                      <i class="ft-alert-circle align-middle"></i> El correo
+                      electrónico debe ser una dirección de correo electrónico
+                      válida
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="password"
+                      formControlName="password"
+                      class="form-control mb-2"
+                      placeholder="Password"
+                      [ngClass]="{
+                        'is-invalid':
+                          registerFormSubmitted && rf.password.invalid,
+                        'is-valid':
+                          registerFormSubmitted && !rf.password.invalid
+                      }"
+                      required
+                    />
+                    <div
+                      *ngIf="registerForm.get('password').errors"
+                      class="help-block mt-1 text-danger"
+                    >
+                      <i class="ft-alert-circle align-middle"></i> se requiere
+                      contraseña
+                    </div>
+                    <div
+                      *ngIf="registerForm.get('password').errors?.minlength"
+                      class="help-block mt-1 text-danger"
+                    >
+                      <i class="ft-alert-circle align-middle"></i> La contraseña
+                      debe tener al menos 6 caracteres
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="password"
+                      formControlName="confirmPassword"
+                      class="form-control mb-2"
+                      placeholder="Confirm Password"
+                      [ngClass]="{
+                        'is-invalid':
+                          registerFormSubmitted && rf.confirmPassword.invalid,
+                        'is-valid':
+                          registerFormSubmitted && !rf.confirmPassword.invalid
+                      }"
+                      required
+                    />
+                    <div
+                      *ngIf="
+                        registerFormSubmitted &&
+                        rf.confirmPassword.errors?.required
+                      "
+                      class="help-block mt-1 text-danger"
+                    >
+                      <i class="ft-alert-circle align-middle"></i> Se requiere
+                      confirmación de contraseña
+                    </div>
+                    <div
+                      *ngIf="
+                        registerFormSubmitted &&
+                        rf.confirmPassword.errors?.mustMatch
+                      "
+                      class="help-block mt-1 text-danger"
+                    >
+                      <i class="ft-alert-circle align-middle"></i> Passwords
+                      must match
+                    </div>
+                  </div>
+                  <!-- Mio-------------------------------- -->
+
+                  <div class="form-group">
+                    <label for="domicilio" class="form-label">Genero</label>
+                    <select
+                      class="form-control form-select-sm"
+                      aria-label=".form-select-sm example"
+                      formControlName="genero"
+                    >
+                      <option value="Masculino">Masculino</option>
+                      <option value="Femenino">Femenino</option>
+                      <option value="binario">No binario</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="domicilio" class="form-label">Domicilio:</label>
+
+                    <div class="row m-0" formGroupName="domicilio">
+                      <!-- <label for="inputEmail3" class="col-sm-3 col-form-label">Pais: </label>
                        <div class="col-sm-9">
                        <select class=" form-control form-select-sm" aria-label=".form-select-sm example" formControlName="pais" id="floatingSelectGrid">
                           <option selected>Pais</option>
                           <option value="0">Valle del cauca</option>                        
                       </select>
                       </div> -->
-                       <label for="inputEmail3" class="col-sm-3 col-form-label">Departamento: </label>
-                       <div class="col-sm-9">
-                       <select class=" form-control form-select-sm" aria-label=".form-select-sm example" formControlName="departamento" id="floatingSelectGrid" (change)="cuidadFuncion($event.target.value)">                   
-                          <option value="{{item.id}}" *ngFor="let item of departamentosCol"  >{{item.name}}</option>                        
-                      </select>
-                      </div>
-                      
-                    <label for="inputEmail3" class="col-sm-3 col-form-label">Ciudad: </label>
+                      <label for="inputEmail3" class="col-sm-3 col-form-label"
+                        >Departamento:
+                      </label>
                       <div class="col-sm-9">
-                      <select class=" form-control form-select-sm" aria-label=".form-select-sm example" formControlName="ciudad">                     
-                          <option value="{{item.id}}" *ngFor="let item of ciudadCol" >{{item.name}}</option>                        
-                      </select>
+                        <select
+                          class="form-control form-select-sm"
+                          aria-label=".form-select-sm example"
+                          formControlName="departamento"
+                          id="floatingSelectGrid"
+                          (change)="cuidadFuncion($event.target.value)"
+                        >
+                          <option
+                            value="{{ item.id }}"
+                            *ngFor="let item of departamentosCol"
+                          >
+                            {{ item.name }}
+                          </option>
+                        </select>
                       </div>
 
-                       <label for="inputEmail3" class="col-sm-3 col-form-label">Direccion: </label>
-                         <div class="col-sm-9">
-                       <input type="text" formControlName="confirmPassword" class="form-control mb-2"
-                        placeholder="Direccion" formControlName="direccion">
-                        </div>
-                    </div>
-
-                    </div>
-
-                      <div class="form-group">
-                      <label for="domicilio" class="form-label">Eres:</label>
-
-                      
-
-              
-                     <div class="row m-0">
-
-                      <label for="inputEmail3" class="col-sm-3 col-form-label">Rol: </label>
-                       <div class="col-sm-9">
-                       <select class=" form-control form-select-sm" aria-label=".form-select-sm example" formControlName="rol" id="floatingSelectGrid">
-                          <option value="ESTUDIANTE_ROLE">Estudiante</option>                        
-                          <option value="PROFESOR_ROLE">Profesor</option>                        
-                      </select>
+                      <label for="inputEmail3" class="col-sm-3 col-form-label"
+                        >Ciudad:
+                      </label>
+                      <div class="col-sm-9">
+                        <select
+                          class="form-control form-select-sm"
+                          aria-label=".form-select-sm example"
+                          formControlName="ciudad"
+                        >
+                          <option
+                            value="{{ item.id }}"
+                            *ngFor="let item of ciudadCol"
+                          >
+                            {{ item.name }}
+                          </option>
+                        </select>
                       </div>
-                     </div> 
-                    </div>
-                  
 
-                    <!-- --------------------Alexis---------------------------- -->
-                    <div class="form-group">
-                    <div class="checkbox auth-checkbox  ">
-                      <input type="checkbox" id="auth-login" formControlName="acceptTerms" class="form-control">
-                      <label for="auth-login"><span class="font-small-2 mb-3 font-weight-normal">Acepto los términos y condiciones</span></label>
-                      <div *ngIf="registerFormSubmitted && (rf.acceptTerms.invalid || rf.acceptTerms.errors?.required)"
-                        class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i>Aceptar Ts & Cs es obligatorio
+                      <label for="inputEmail3" class="col-sm-3 col-form-label"
+                        >Direccion:
+                      </label>
+                      <div class="col-sm-9">
+                        <input
+                          type="text"
+                          formControlName="confirmPassword"
+                          class="form-control mb-2"
+                          placeholder="Direccion"
+                          formControlName="direccion"
+                        />
                       </div>
                     </div>
+                  </div>
+
+
+                  <!-- --------------------Alexis---------------------------- -->
+                  <div class="form-group">
+                    <div class="checkbox auth-checkbox">
+                      <input
+                        type="checkbox"
+                        id="auth-login"
+                        formControlName="acceptTerms"
+                        class="form-control"
+                      />
+                      <label for="auth-login"
+                        ><span class="font-small-2 mb-3 font-weight-normal"
+                          >Acepto los términos y condiciones</span
+                        ></label
+                      >
+                      <div
+                        *ngIf="
+                          registerFormSubmitted &&
+                          (rf.acceptTerms.invalid ||
+                            rf.acceptTerms.errors?.required)
+                        "
+                        class="help-block mt-1 text-danger"
+                      >
+                        <i class="ft-alert-circle align-middle"></i>Aceptar Ts &
+                        Cs es obligatorio
+                      </div>
                     </div>
-                    <div class="d-flex justify-content-between flex-sm-row flex-column">
-                      <a [routerLink]="['/auth/login']" class="btn bg-light-primary mb-2 mb-sm-0">Atrás para iniciar sesión</a>
-                      <a class="btn btn-primary" (click)="onSubmit()">Registrarse</a>
-                    </div>
-                  </form>
-  
-  
-                </div>
+                  </div>
+                  <div
+                    class="
+                      d-flex
+                      justify-content-between
+                      flex-sm-row flex-column
+                    "
+                  >
+                    <a
+                      [routerLink]="['/auth/login']"
+                      class="btn bg-light-primary mb-2 mb-sm-0"
+                      >Atrás para iniciar sesión</a
+                    >
+                    <a class="btn btn-primary" (click)="onSubmit()"
+                      >Registrarse</a
+                    >
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <!--Registration Page Ends-->
-  
+  </div>
+</section>
+<!--Registration Page Ends-->

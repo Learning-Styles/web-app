@@ -23,7 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ParseToIntPipe } from './pipes/parse-to-int.pipe';
 import { RadioIdPipe } from './pipes/radio-id.pipe';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
+import { GraficasComponent } from "./pages/history/graficas/graficas.component";
+import { RadarComponent } from './pages/history/radar/radar.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     HistoryComponent,
     ParseToIntPipe,
     RadioIdPipe,
+    GraficasComponent,
+    RadarComponent,
   ],
   imports: [
     CommonModule,
@@ -47,8 +50,11 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     ArchwizardModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forFeature(fromStudent.studentFeatureKey, fromStudent.StudentReducer),
-    EffectsModule.forFeature([StudentEffects])
-  ]
+    StoreModule.forFeature(
+      fromStudent.studentFeatureKey,
+      fromStudent.StudentReducer
+    ),
+    EffectsModule.forFeature([StudentEffects]),
+  ],
 })
-export class StudentModule { }
+export class StudentModule {}
